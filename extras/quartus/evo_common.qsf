@@ -1,0 +1,343 @@
+# -------------------------------------------------------------------------- #
+#
+# Copyright (C) 2017  Intel Corporation. All rights reserved.
+# Your use of Intel Corporation's design tools, logic functions 
+# and other software and tools, and its AMPP partner logic 
+# functions, and any output files from any of the foregoing 
+# (including device programming or simulation files), and any 
+# associated documentation or information are expressly subject 
+# to the terms and conditions of the Intel Program License 
+# Subscription Agreement, the Intel Quartus Prime License Agreement,
+# the Intel FPGA IP License Agreement, or other applicable license
+# agreement, including, without limitation, that your use is for
+# the sole purpose of programming logic devices manufactured by
+# Intel and sold by Intel or its authorized distributors.  Please
+# refer to the applicable agreement for further details.
+#
+# -------------------------------------------------------------------------- #
+#
+# Quartus Prime
+# Version 17.1.0 Build 590 10/25/2017 SJ Standard Edition
+# Date created = 16:38:00  September 27, 2019
+#
+# -------------------------------------------------------------------------- #
+#
+# Notes:
+#
+# 1) The default values for assignments are stored in the file:
+#		evo_top_assignment_defaults.qdf
+#    If this file doesn't exist, see file:
+#		assignment_defaults.qdf
+#
+# 2) Altera recommends that you do not modify this file. This
+#    file is updated automatically by the Quartus Prime software
+#    and any changes you make may be lost or overwritten.
+#
+# -------------------------------------------------------------------------- #
+
+
+# Always define EVO_CORE_BASE
+set_global_assignment -name VERILOG_MACRO "EVO_CORE_BASE" 
+# Also enable one and only one of the following if you want a different CORE functionality
+#set_global_assignment -name VERILOG_MACRO "EVO_CORE_DV_PMUX"
+#
+set_global_assignment -name FAMILY "MAX 10"
+set_global_assignment -name TOP_LEVEL_ENTITY evo_top
+set_global_assignment -name ORIGINAL_QUARTUS_VERSION 17.1.0
+set_global_assignment -name PROJECT_CREATION_TIME_DATE "16:38:00  SEPTEMBER 27, 2019"
+set_global_assignment -name LAST_QUARTUS_VERSION "17.1.0 Standard Edition"
+set_global_assignment -name PROJECT_OUTPUT_DIRECTORY reports
+set_global_assignment -name MIN_CORE_JUNCTION_TEMP 0
+set_global_assignment -name MAX_CORE_JUNCTION_TEMP 85
+set_global_assignment -name DEVICE_FILTER_PACKAGE FBGA
+set_global_assignment -name DEVICE_FILTER_PIN_COUNT 256
+set_global_assignment -name ERROR_CHECK_FREQUENCY_DIVISOR 256
+set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
+set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
+set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
+set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
+##SJP##DONT USE PER 12002 ERROR##set_global_assignment -name SEARCH_PATH ../design/
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_top.sv
+# Read any OpenEvo specific quartus commands
+#   Create the TCL variable OPENEVO_PATH that specifies the directory
+#   path to the  directory
+set QPWD [pwd]
+set OPENEVO_PATH $QPWD/../..
+source $OPENEVO_PATH/extras/quartus/openevo.qsf
+
+#---------------------------------------------------------------------------
+# Had to add the following lines to specifically load these files to get around an issue Quartus has
+# with structs used in port lists. See the Intel forum post on this - https://tinyurl.com/u5vu2zq
+# Include lowest levl module first, so they are already defined when instantiated
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_addr_pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_const_pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_bsp_pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_build/extras/design/evo_xb_addr_pkg.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/synch.v 
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_clkrst.sv
+set_global_assignment -name QXP_FILE ../../../evo_bsp/extras/quartus/evo_10M25DAF256_bsp.qxp
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_build/extras/design/evo_xb_info.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_xb_pmux.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_build/extras/design/evo_xb.sv
+set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_core.sv
+#    synch must be before the evo_port.sv
+# End of includes for Quartus struct issue
+#---------------------------------------------------------------------------
+# These are needed to pull in the IP stuff from XLR8. Here we are pointing to Steve's copy
+# of the SVN repo, which should always exist. 
+set_global_assignment -name SEARCH_PATH ../../../evo_bsp/extras/design/ip/alt_lpm_mult51x9u/
+set_global_assignment -name QIP_FILE ../../../evo_bsp/extras/design/ip/int_osc/int_osc/synthesis/int_osc.qip
+set_global_assignment -name QIP_FILE ../../../evo_bsp/extras/design/ip/alt_pll/alt_pll.qip
+#set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/ram2p16384x16/ram2p16384x16.qip
+#set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/ram2p32768x16/ram2p32768x16.qip
+##SJP## DONT NEED THIS?? ##set_global_assignment -name SYSTEMVERILOG_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/rtl_alorium/core/xlr8_flashload_pkg.svh
+##SJP## DONT NEED THIS YET?? ##set_global_assignment -name SYSTEMVERILOG_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/rtl/xb/openxlr8/Default/extras/rtl/pll16.vh
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/ip/alo_crc32/alo_crc32.sv
+
+## Load in the blocks        
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/chipid/chipid.qip
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name SIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/chipid/chipid.sip
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/dualconfig_10M50/dualconfig/synthesis/dualconfig.qip
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE ../ip/ram_1p_32x39/ram_1p_32x39.qip
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE ../ip/ecc32_decoder/ecc32_decoder.qip
+##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE ../ip/ecc32_encoder/ecc32_encoder.qip
+
+
+#############################################################################
+# JTAG Pin Sharing
+#############################################################################
+# For Evowe need to turn on JTAG Pin Sharing
+set_global_assignment -name ENABLE_JTAG_PIN_SHARING ON
+
+
+#============================================================================
+# MISC
+#============================================================================
+#                       IO Type                                       RTL Name         
+#                       -------------------------------               --------
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLKEN
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RESETN
+#
+#                       Pin                                 RTL Name         
+#                       -------------------------------     ---------------- 
+set_location_assignment PIN_L3 -to FPGA_CLK
+set_location_assignment PIN_R1 -to FPGA_CLKEN
+set_location_assignment PIN_B10 -to RESETN
+
+#============================================================================
+# I2C
+#============================================================================
+#                       IO Type                             RTL Name         
+#                       -------------------------------     ---------------- 
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_SCL
+#
+#                       Pin                                 RTL Name         
+#                       -------------------------------     ---------------- 
+set_location_assignment PIN_P6 -to FPGA_SDA
+set_location_assignment PIN_R7 -to FPGA_SCL
+
+
+#============================================================================
+# FPGA PINS
+#============================================================================
+#                       IO Type                             RTL Name         
+#                       -------------------------------     ---------------- 
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC-R
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AN1
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AN2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D9
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D11
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D12
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D13
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D13_LED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E7
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E9
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E11
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E12
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E13
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E14
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E15
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E16
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E17
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E18
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E19
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E20
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E21
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E22
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E23
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E24
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E25
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E26
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E27
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E28
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E29
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E30
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E31
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to G0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to G1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D9
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D11
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D12
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D13
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_MISO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_MOSI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_SCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAGEN
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MISO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MOSI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z7
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z9
+
+#                       Pin                                 RTL Name         
+#                       -------------------------------     ---------------- 
+#set_location_assignment PIN_E4                          -to ADC-R
+#set_location_assignment PIN_D2                          -to AN1
+#set_location_assignment PIN_F3                          -to AN2
+set_location_assignment PIN_T14 -to D0
+set_location_assignment PIN_T15 -to D1
+set_location_assignment PIN_P16 -to D4
+set_location_assignment PIN_E14 -to D5
+set_location_assignment PIN_A13 -to D6
+set_location_assignment PIN_P11 -to D8
+set_location_assignment PIN_D14 -to D9
+set_location_assignment PIN_H2 -to D10
+set_location_assignment PIN_G1 -to D11
+set_location_assignment PIN_H3 -to D12
+set_location_assignment PIN_H1 -to D13
+set_location_assignment PIN_B3 -to D13_LED
+set_location_assignment PIN_P12 -to E0
+set_location_assignment PIN_P13 -to E1
+set_location_assignment PIN_N14 -to E2
+set_location_assignment PIN_R14 -to E3
+set_location_assignment PIN_M14 -to E4
+set_location_assignment PIN_P15 -to E5
+set_location_assignment PIN_L15 -to E6
+set_location_assignment PIN_K14 -to E7
+set_location_assignment PIN_L16 -to E8
+set_location_assignment PIN_M16 -to E9
+set_location_assignment PIN_K15 -to E10
+set_location_assignment PIN_J14 -to E11
+set_location_assignment PIN_J16 -to E12
+set_location_assignment PIN_J15 -to E13
+set_location_assignment PIN_H11 -to E14
+set_location_assignment PIN_H16 -to E15
+set_location_assignment PIN_H15 -to E16
+set_location_assignment PIN_G15 -to E17
+set_location_assignment PIN_G14 -to E18
+set_location_assignment PIN_F16 -to E19
+set_location_assignment PIN_G16 -to E20
+set_location_assignment PIN_E16 -to E21
+set_location_assignment PIN_E15 -to E22
+set_location_assignment PIN_C16 -to E23
+set_location_assignment PIN_C15 -to E24
+set_location_assignment PIN_C14 -to E25
+set_location_assignment PIN_B13 -to E26
+set_location_assignment PIN_C13 -to E27
+set_location_assignment PIN_A4 -to E28
+set_location_assignment PIN_A8 -to E29
+set_location_assignment PIN_A7 -to E30
+set_location_assignment PIN_A6 -to E31
+set_location_assignment PIN_A5 -to G0
+set_location_assignment PIN_B5 -to G1
+set_location_assignment PIN_M3 -to FPGA_D0
+set_location_assignment PIN_L6 -to FPGA_D1
+set_location_assignment PIN_P1 -to FPGA_D4
+set_location_assignment PIN_N4 -to FPGA_D5
+set_location_assignment PIN_N2 -to FPGA_D6
+set_location_assignment PIN_L1 -to FPGA_D8
+set_location_assignment PIN_M2 -to FPGA_D9
+set_location_assignment PIN_C3 -to FPGA_D10
+set_location_assignment PIN_C2 -to FPGA_D11
+set_location_assignment PIN_C1 -to FPGA_D12
+set_location_assignment PIN_B2 -to FPGA_D13
+set_location_assignment PIN_B1 -to FPGA_MISO
+set_location_assignment PIN_J2 -to FPGA_MOSI
+set_location_assignment PIN_N3 -to FPGA_SCK
+#set_location_assignment PIN_G6 -to JTAGEN # Don't need to manually connect this
+set_location_assignment PIN_P14 -to MISO
+set_location_assignment PIN_R12 -to MOSI
+set_location_assignment PIN_R11 -to SCK
+set_location_assignment PIN_K2 -to Z0
+set_location_assignment PIN_L2 -to Z1
+set_location_assignment PIN_R6 -to Z2
+set_location_assignment PIN_R5 -to Z3
+set_location_assignment PIN_T4 -to Z4
+set_location_assignment PIN_T5 -to Z5
+set_location_assignment PIN_T8 -to Z6
+set_location_assignment PIN_T2 -to Z7
+set_location_assignment PIN_T3 -to Z8
+set_location_assignment PIN_R4 -to Z9
+
+set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
+set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
+set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+# Local Variables:
+# mode: tcl
+# End:
+
