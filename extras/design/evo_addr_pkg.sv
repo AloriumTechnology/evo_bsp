@@ -1,29 +1,82 @@
+//===========================================================================
+//  Copyright(c) Alorium Technology Group Inc., 2019
+//  ALL RIGHTS RESERVED
+//===========================================================================
+//
+// File name:  : evo_addr_pkg.sv
+// Author      : Steve Phillips
+// Contact     : support@aloriumtech.com
+// Description : 
+// 
+//   This file defines all the address parameters used in the
+//   design. Most are for the CSR Avalon bus, but some addresses are
+//   used on private DBUS interfaces between XLR8 IP blocks and the
+//   wrapper around them.
+//
+//   These addresses are avaialable for use in all modules of the design.
+//
+//===========================================================================
+
 `ifndef _EVO_ADDR_PKG_DONE 
-
-  `define _EVO_ADDR_PKG_DONE      // set flag that pkg already included 
-
-
+`define _EVO_ADDR_PKG_DONE      // set flag that pkg already included 
 
 
 package evo_addr_pkg; 
-   // I2C IP core. These are used only between the evo_i2c_ctrl and
-   // the evo_i2c_ip. The addresses are not in the same namespace as
-   // any other addresses
+   //==============================================================================
+   // Private (non-CSR) Address definitions
+   //==============================================================================
+
+   //------------------------------------------------------------------------------
+   // I2C DBUS
+   //
+   // These are used only between the evo_i2c_ctrl and the
+   // evo_i2c_ip. The addresses are not in the same namespace as any
+   // other addresses
    parameter I2C_TWCR_ADDR  = 8'hE0;
    parameter I2C_TWDR_ADDR  = 8'hE1;
    parameter I2C_TWAR_ADDR  = 8'hE2;
    parameter I2C_TWSR_ADDR  = 8'hE3;
    parameter I2C_TWBR_ADDR  = 8'hE4;
    parameter I2C_TWAMR_ADDR = 8'hE5;
+
+   //------------------------------------------------------------------------------
+   // Flashload DBUS
+   //    
    // These are used to communicate between the evo_flash_ctrl and the 
    // xlr8_flashload
    parameter FCFG_CID_ADDR  = 8'hCF; // XLR8 flash config: chip id (64b FIFO)
    parameter FCFG_CTL_ADDR  = 8'hD0; // XLR8 flash config: flash programming
    parameter FCFG_STS_ADDR  = 8'hD1; // XLR8 flash config: status
    parameter FCFG_DAT_ADDR  = 8'hD2; // XLR8 flash config: flash programming data
+
+   //------------------------------------------------------------------------------
+   // INFO Indirect Addresses
    //
-   // Private addresses to do indirect addressing to 
-   // the EVO_INFO data
+   // Private addresses to do indirect addressing to the EVO_INFO
+   // data. The description of the values at these addresses are shown
+   // below. The values are defined by module instantiation parameters
+   // that are ultimately defined by the evo_info.qsf file, which is
+   // created by the qcompile script. Once the evo_bsp QXP is created
+   // the corresponding evo_info.qsf file must be included with it in
+   // the evo_bsp XB library so that the values match with what is
+   // inside the evo_bsp QXP.
+   //
+   // NAME   Description          Type    Default  Valid Values  
+   // ------------------------------------------------------------------------------   
+   // MODEL  Alorium Board name   [%4s]   EM51     EM51 (so far)
+   // SERIAL Not currently used   [ %d]   1        any  
+   // PART   Board Date           [ %d]   202002   201910,202002 (so far) 
+   // FTYPE  FPGA Type            [%4s]   10M      10M
+   // FSIZE  FPGA Size            [ %d]   25       02,04,08,16,25,40,50
+   // FSPLY  FPGA Supply          [%1s]   D        S,D
+   // FFEAT  FPGA Feature Option  [%1s]   A        A,C,D,F
+   // FPACK  FPGA Package Type    [%1s]   F        E,F,M,U,V
+   // FPINS  FPGA Pin Count       [ %d]   256      36,81,144,153,169,256,324,484,672
+   // FTEMP  FPGA Operating Temp  [%1s]   C        A,C,I
+   // FSPED  FPGA Speed           [ %d]   8        6,7,8
+   // FOPTN  FPGA Optional Suffix [%1s]   G        E,G,P
+   // VER    Release Version      [ %d]   1        any   
+   // SVN    SVN Repo Version     [ %d]   273      any   
    parameter EVO_INFO_MODEL_ADDR   = 32'h0;
    parameter EVO_INFO_SERIAL_ADDR  = 32'h1;
    parameter EVO_INFO_PART_ADDR    = 32'h2;
@@ -38,47 +91,34 @@ package evo_addr_pkg;
    parameter EVO_INFO_FOPTN_ADDR   = 32'h18;
    parameter EVO_INFO_VER_ADDR     = 32'h20;
    parameter EVO_INFO_SVN_ADDR     = 32'h21;
-   parameter EVO_INFO_XBNUM_ADDR   = 32'h30;
-   parameter EVO_INFO_XB01_ADDR    = 32'h31;
-   parameter EVO_INFO_XB02_ADDR    = 32'h32;
-   parameter EVO_INFO_XB03_ADDR    = 32'h33;
-   parameter EVO_INFO_XB04_ADDR    = 32'h34;
-   parameter EVO_INFO_XB05_ADDR    = 32'h35;
-   parameter EVO_INFO_XB06_ADDR    = 32'h36;
-   parameter EVO_INFO_XB07_ADDR    = 32'h37;
-   parameter EVO_INFO_XB08_ADDR    = 32'h38;
-   parameter EVO_INFO_XB09_ADDR    = 32'h39;
-   parameter EVO_INFO_XB10_ADDR    = 32'h3a;
-   parameter EVO_INFO_XB11_ADDR    = 32'h3b;
-   parameter EVO_INFO_XB12_ADDR    = 32'h3c;
-   parameter EVO_INFO_XB13_ADDR    = 32'h3d;
-   parameter EVO_INFO_XB14_ADDR    = 32'h3e;
-   parameter EVO_INFO_XB15_ADDR    = 32'h3f;
-   //  
-   // FIXME: These are the old port CSR frinitions. Will go away when we convert over to 
-   // the new port type
-   parameter PORT_D_ADDR    = 12'h010;
-   parameter DDR_D_ADDR     = 12'h011;
-   parameter PIN_D_ADDR     = 12'h012;
-   parameter PCMSK_D_ADDR   = 12'h013;
-   parameter PORT_F_ADDR    = 12'h014;
-   parameter DDR_F_ADDR     = 12'h015;
-   parameter PIN_F_ADDR     = 12'h016;
-   parameter PCMSK_F_ADDR   = 12'h017;
-   parameter PORT_E_ADDR    = 12'h018;
-   parameter DDR_E_ADDR     = 12'h019;
-   parameter PIN_E_ADDR     = 12'h01A;
-   parameter PCMSK_E_ADDR   = 12'h01B;
-   parameter PORT_Z_ADDR    = 12'h01C;
-   parameter DDR_Z_ADDR     = 12'h01D;
-   parameter PIN_Z_ADDR     = 12'h01E;
-   parameter PCMSK_Z_ADDR   = 12'h01F;
 
-
-   // Not used - shouldn't be in any namespace
-   //parameter PRR_ADDR       = 8'h64;  // Used in xlr8_clocks module
+   //------------------------------------------------------------------------------
+   // XB INFO Indirect Addresses
    //
-   // Start of CSR Reg Address Space
+   // Private addresses used to do indirect addressing in the
+   // evo_xb_info module. This is a seperate INFO module in the evo_xb
+   // that allows the user to specify thier own INFO CSRs. There are
+   // four standard CSRs included in all evo_xb_info modules
+   parameter EVO_XB_INFO_NUM_ADDR    = 32'h0; // Address of XB_INFO_NUM value
+   parameter EVO_XB_INFO_VENDOR_ADDR = 32'h1; // Address and Value for Vendor name
+   parameter EVO_XB_INFO_MODEL_ADDR  = 32'h2; // Address and Value for product Model 
+   parameter EVO_XB_INFO_TYPE_ADDR   = 32'h3; // Address and Value for XB Type
+   
+   //==============================================================================
+   //==============================================================================
+   //
+   //   Start of EVO CSR Reg Address Space
+   //
+   //==============================================================================
+   //==============================================================================
+
+   //==============================================================================
+   // EVO XB Info Registers
+   //------------------------------------------------------------------------------
+   // This is the only address outside of the BSP address space (0x7ff-0x000). 
+   // Listing it here so it dowsn't go unoticed way at the end of this file.
+   parameter EVO_XB_INFO_ADDR   = 12'h801; // Evo Info Reg
+
    //==============================================================================
    // EVO I2C Control Registers
    //------------------------------------------------------------------------------
@@ -99,6 +139,7 @@ package evo_addr_pkg;
    parameter REG_H00E        = 12'h00E; // In evo_i2c_reg
    parameter REG_H00F        = 12'h00F; // In evo_i2c_reg
    // parameter                 = 12'h00F;
+
    //==============================================================================
    // Evo D2F CSR Registers
    //------------------------------------------------------------------------------
@@ -111,6 +152,7 @@ package evo_addr_pkg;
    parameter D2F_ENCLR_ADDR  = D2F_BASE_ADDR + 12'h005; // Enable CLR CSR for D2F
    parameter D2F_ENSET_ADDR  = D2F_BASE_ADDR + 12'h006; // Enable SET CSR for D2F
    parameter D2F_ENTGL_ADDR  = D2F_BASE_ADDR + 12'h007; // Enable TGL CSR for D2F
+
    //==============================================================================
    // Evo Flash CSR Registers
    //------------------------------------------------------------------------------
@@ -120,17 +162,17 @@ package evo_addr_pkg;
    parameter FLASH_CRC_ADDR       = FLASH_BASE_ADDR + 12'h002; // CRC Reg
    parameter FLASH_IMG_ADDR       = FLASH_BASE_ADDR + 12'h003; // Image Reg
    parameter FLASH_DBG_ADDR       = FLASH_BASE_ADDR + 12'h004; // Debug reg
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h005; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h006; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h007; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h008; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h009; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00A; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00B; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00C; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00D; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00E; // - unused -
-// parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00F; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h005; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h006; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h007; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h008; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h009; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00A; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00B; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00C; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00D; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00E; // - unused -
+   // parameter FLASH_unused         = FLASH_BASE_ADDR + 12'h00F; // - unused -
    //==============================================================================
    // Flashload APAGE Buffer - 128 bytes (32 words x 4 bytes/word)
    //------------------------------------------------------------------------------
@@ -167,6 +209,7 @@ package evo_addr_pkg;
    parameter FLASH_APAGE_29_ADDR  = FLASH_APAGE_ADDR + 12'h01D; // APAGE buffer word 29
    parameter FLASH_APAGE_30_ADDR  = FLASH_APAGE_ADDR + 12'h01E; // APAGE buffer word 30
    parameter FLASH_APAGE_31_ADDR  = FLASH_APAGE_ADDR + 12'h01F; // APAGE buffer word 31
+
    //==============================================================================
    // FPGA Port D Control Registers
    //------------------------------------------------------------------------------
@@ -235,6 +278,7 @@ package evo_addr_pkg;
    parameter PORT_D_PINCFG29_ADDR  = PORT_D_BASE_ADDR + 12'h03D; // Pin Configuration Bit 29 
    parameter PORT_D_PINCFG30_ADDR  = PORT_D_BASE_ADDR + 12'h03E; // Pin Configuration Bit 30 
    parameter PORT_D_PINCFG31_ADDR  = PORT_D_BASE_ADDR + 12'h03F; // Pin Configuration Bit 31 
+
    //==============================================================================
    // FPGA Port E Control Registers
    //------------------------------------------------------------------------------
@@ -303,6 +347,7 @@ package evo_addr_pkg;
    parameter PORT_E_PINCFG29_ADDR  = PORT_E_BASE_ADDR + 12'h03D; // Pin Configuration Bit 29 
    parameter PORT_E_PINCFG30_ADDR  = PORT_E_BASE_ADDR + 12'h03E; // Pin Configuration Bit 30 
    parameter PORT_E_PINCFG31_ADDR  = PORT_E_BASE_ADDR + 12'h03F; // Pin Configuration Bit 31 
+
    //==============================================================================
    // FPGA Port F Control Registers
    //------------------------------------------------------------------------------
@@ -371,6 +416,7 @@ package evo_addr_pkg;
    parameter PORT_F_PINCFG29_ADDR  = PORT_F_BASE_ADDR + 12'h03D; // Pin Configuration Bit 29 
    parameter PORT_F_PINCFG30_ADDR  = PORT_F_BASE_ADDR + 12'h03E; // Pin Configuration Bit 30 
    parameter PORT_F_PINCFG31_ADDR  = PORT_F_BASE_ADDR + 12'h03F; // Pin Configuration Bit 31 
+
    //==============================================================================
    // FPGA Port G Control Registers
    //------------------------------------------------------------------------------
@@ -439,6 +485,7 @@ package evo_addr_pkg;
    parameter PORT_G_PINCFG29_ADDR  = PORT_G_BASE_ADDR + 12'h03D; // Pin Configuration Bit 29 
    parameter PORT_G_PINCFG30_ADDR  = PORT_G_BASE_ADDR + 12'h03E; // Pin Configuration Bit 30 
    parameter PORT_G_PINCFG31_ADDR  = PORT_G_BASE_ADDR + 12'h03F; // Pin Configuration Bit 31 
+
    //==============================================================================
    // FPGA Port Z Control Registers
    //------------------------------------------------------------------------------
@@ -509,11 +556,6 @@ package evo_addr_pkg;
    parameter PORT_Z_PINCFG31_ADDR  = PORT_Z_BASE_ADDR + 12'h03F; // Pin Configuration Bit 31 
 
 
-
-   //==============================================================================
-   // EVO XB Info Registers
-   //------------------------------------------------------------------------------
-   parameter EVO_XB_INFO_ADDR   = 12'h801; // Evo Info Reg
 
    
 endpackage 

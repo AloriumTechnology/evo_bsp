@@ -1,3 +1,16 @@
+//===========================================================================
+//  Copyright(c) Alorium Technology Group Inc., 2019
+//  ALL RIGHTS RESERVED
+//===========================================================================
+//
+// File name:  : evo_const_pkg.sv
+// Author      : Steve Phillips
+// Contact     : support@aloriumtech.com
+// Description : 
+// 
+//   This file defines conatants used within the design
+//
+//===========================================================================
 `ifndef _EVO_CONST_PKG_DONE 
 
   `define _EVO_CONST_PKG_DONE      // set flag that pkg already included 
@@ -32,40 +45,6 @@ package evo_const_pkg;
    parameter XLR8_PLL_CLK4_PHASE_SHIFT = "1953";
    // I2C_Reg constants
    parameter EVO_INFO_RST_VAL     = 32'h00;
-//sjp//----------------------------------------------------------------------
-//sjp// Moving these to the parameter list at he top of evo_top so that 
-//sjp// we can set them via the QSF files
-//sjp//   parameter EVO_INFO_MODEL_VAL   = 32'h00;
-//sjp//   parameter EVO_INFO_SERIAL_VAL  = 32'h01;
-//sjp//   parameter EVO_INFO_PART_VAL    = 32'h12;
-//sjp//   parameter EVO_INFO_FTYPE_VAL   = 32'h10;
-//sjp//   parameter EVO_INFO_FSIZE_VAL   = 32'h11;
-//sjp//   parameter EVO_INFO_FSPLY_VAL   = 32'h12;
-//sjp//   parameter EVO_INFO_FFEAT_VAL   = 32'h13;
-//sjp//   parameter EVO_INFO_FPACK_VAL   = 32'h14;
-//sjp//   parameter EVO_INFO_FPINS_VAL   = 32'h15;
-//sjp//   parameter EVO_INFO_FTEMP_VAL   = 32'h16;
-//sjp//   parameter EVO_INFO_FSPED_VAL   = 32'h17;
-//sjp//   parameter EVO_INFO_FOPTN_VAL   = 32'h18;
-//sjp//   parameter EVO_INFO_VER_VAL     = 32'h20;
-//sjp//   parameter EVO_INFO_SVN_VAL     = 220;
-//sjp//   parameter EVO_INFO_XBNUM_VAL   = 32'h30;
-//sjp//   parameter EVO_INFO_XB01_VAL    = 32'h31;
-//sjp//   parameter EVO_INFO_XB02_VAL    = 32'h32;
-//sjp//   parameter EVO_INFO_XB03_VAL    = 32'h33;
-//sjp//   parameter EVO_INFO_XB04_VAL    = 32'h34;
-//sjp//   parameter EVO_INFO_XB05_VAL    = 32'h35;
-//sjp//   parameter EVO_INFO_XB06_VAL    = 32'h36;
-//sjp//   parameter EVO_INFO_XB07_VAL    = 32'h37;
-//sjp//   parameter EVO_INFO_XB08_VAL    = 32'h38;
-//sjp//   parameter EVO_INFO_XB09_VAL    = 32'h39;
-//sjp//   parameter EVO_INFO_XB10_VAL    = 32'h3a;
-//sjp//   parameter EVO_INFO_XB11_VAL    = 32'h3b;
-//sjp//   parameter EVO_INFO_XB12_VAL    = 32'h3c;
-//sjp//   parameter EVO_INFO_XB13_VAL    = 32'h3d;
-//sjp//   parameter EVO_INFO_XB14_VAL    = 32'h3e;
-//sjp//   parameter EVO_INFO_XB15_VAL    = 32'h3f;
-//sjp//----------------------------------------------------------------------
    parameter EVO_REG0E_RST_VAL    = 32'h0E;
    parameter EVO_REG0F_RST_VAL    = 32'h0F;
    // D2F

@@ -35,6 +35,10 @@
 #
 # -------------------------------------------------------------------------- #
 
+# Specify the TCL script to run after the compilation is complete
+set_global_assignment -name POST_FLOW_SCRIPT_FILE quartus_sh:evo_convert_img.tcl
+post_message -type info "Set POST_FLOW_SCRIPT_FILE = quartus_sh:evo_convert_img.tcl"
+
 
 # Always define EVO_CORE_BASE
 set_global_assignment -name VERILOG_MACRO "EVO_CORE_BASE" 
@@ -56,7 +60,6 @@ set_global_assignment -name EDA_SIMULATION_TOOL "ModelSim-Altera (Verilog)"
 set_global_assignment -name EDA_TIME_SCALE "1 ps" -section_id eda_simulation
 set_global_assignment -name EDA_OUTPUT_DATA_FORMAT "VERILOG HDL" -section_id eda_simulation
 set_global_assignment -name VERILOG_INPUT_VERSION SYSTEMVERILOG_2005
-##SJP##DONT USE PER 12002 ERROR##set_global_assignment -name SEARCH_PATH ../design/
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_top.sv
 # Read any OpenEvo specific quartus commands
 #   Create the TCL variable OPENEVO_PATH that specifies the directory
@@ -68,7 +71,8 @@ source $OPENEVO_PATH/extras/quartus/openevo.qsf
 #---------------------------------------------------------------------------
 # Had to add the following lines to specifically load these files to get around an issue Quartus has
 # with structs used in port lists. See the Intel forum post on this - https://tinyurl.com/u5vu2zq
-# Include lowest levl module first, so they are already defined when instantiated
+# Also reference Intel Quartus 12002 ERROR.
+# Include lowest level module first, so they are already defined when instantiated
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_addr_pkg.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_const_pkg.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_bsp_pkg.sv
@@ -80,27 +84,12 @@ set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_build/extras/design/
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_xb_pmux.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_build/extras/design/evo_xb.sv
 set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/evo_core.sv
-#    synch must be before the evo_port.sv
 # End of includes for Quartus struct issue
 #---------------------------------------------------------------------------
-# These are needed to pull in the IP stuff from XLR8. Here we are pointing to Steve's copy
-# of the SVN repo, which should always exist. 
+# These are needed to pull in the IP stuff 
 set_global_assignment -name SEARCH_PATH ../../../evo_bsp/extras/design/ip/alt_lpm_mult51x9u/
 set_global_assignment -name QIP_FILE ../../../evo_bsp/extras/design/ip/int_osc/int_osc/synthesis/int_osc.qip
 set_global_assignment -name QIP_FILE ../../../evo_bsp/extras/design/ip/alt_pll/alt_pll.qip
-#set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/ram2p16384x16/ram2p16384x16.qip
-#set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/ram2p32768x16/ram2p32768x16.qip
-##SJP## DONT NEED THIS?? ##set_global_assignment -name SYSTEMVERILOG_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/rtl_alorium/core/xlr8_flashload_pkg.svh
-##SJP## DONT NEED THIS YET?? ##set_global_assignment -name SYSTEMVERILOG_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/rtl/xb/openxlr8/Default/extras/rtl/pll16.vh
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name SYSTEMVERILOG_FILE ../../../evo_bsp/extras/design/ip/alo_crc32/alo_crc32.sv
-
-## Load in the blocks        
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/chipid/chipid.qip
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name SIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/chipid/chipid.sip
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE /pro/r7107/work/steve/view_current/trunk/atmega328clone/ip/dualconfig_10M50/dualconfig/synthesis/dualconfig.qip
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE ../ip/ram_1p_32x39/ram_1p_32x39.qip
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE ../ip/ecc32_decoder/ecc32_decoder.qip
-##SJP## INCLUDED IN BSP?? ##set_global_assignment -name QIP_FILE ../ip/ecc32_encoder/ecc32_encoder.qip
 
 
 #############################################################################
