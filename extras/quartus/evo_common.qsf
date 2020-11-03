@@ -262,34 +262,67 @@ set_location_assignment PIN_A7 -to E30
 set_location_assignment PIN_A6 -to E31
 set_location_assignment PIN_A5 -to G0
 set_location_assignment PIN_B5 -to G1
-set_location_assignment PIN_M3 -to FPGA_D0
-set_location_assignment PIN_L6 -to FPGA_D1
-set_location_assignment PIN_P1 -to FPGA_D4
-set_location_assignment PIN_N4 -to FPGA_D5
-set_location_assignment PIN_N2 -to FPGA_D6
-set_location_assignment PIN_L1 -to FPGA_D8
-set_location_assignment PIN_M2 -to FPGA_D9
-set_location_assignment PIN_C3 -to FPGA_D10
-set_location_assignment PIN_C2 -to FPGA_D11
-set_location_assignment PIN_C1 -to FPGA_D12
-set_location_assignment PIN_B2 -to FPGA_D13
-set_location_assignment PIN_B1 -to FPGA_MISO
-set_location_assignment PIN_J2 -to FPGA_MOSI
-set_location_assignment PIN_N3 -to FPGA_SCK
+#===========================================================================
+# Pin asssignmenst for original PCC pin arrangements
+#set_location_assignment PIN_M3 -to FPGA_D0
+#set_location_assignment PIN_L6 -to FPGA_D1
+#set_location_assignment PIN_P1 -to FPGA_D4
+#set_location_assignment PIN_N4 -to FPGA_D5
+#set_location_assignment PIN_N2 -to FPGA_D6
+#set_location_assignment PIN_L1 -to FPGA_D8
+#set_location_assignment PIN_M2 -to FPGA_D9
+#set_location_assignment PIN_C3 -to FPGA_D10
+#set_location_assignment PIN_C2 -to FPGA_D11
+#set_location_assignment PIN_C1 -to FPGA_D12
+#set_location_assignment PIN_B2 -to FPGA_D13
+#set_location_assignment PIN_B1 -to FPGA_MISO
+#set_location_assignment PIN_J2 -to FPGA_MOSI
+#set_location_assignment PIN_N3 -to FPGA_SCK
+##set_location_assignment PIN_G6 -to JTAGEN # Don't need to manually connect this
+#set_location_assignment PIN_P14 -to MISO
+#set_location_assignment PIN_R12 -to MOSI
+#set_location_assignment PIN_R11 -to SCK
+#set_location_assignment PIN_K2 -to Z0
+#set_location_assignment PIN_L2 -to Z1
+#set_location_assignment PIN_R6 -to Z2
+#set_location_assignment PIN_R5 -to Z3
+#set_location_assignment PIN_T4 -to Z4
+#set_location_assignment PIN_T5 -to Z5
+#set_location_assignment PIN_T8 -to Z6
+#set_location_assignment PIN_T2 -to Z7
+#set_location_assignment PIN_T3 -to Z8
+#set_location_assignment PIN_R4 -to Z9
+#===========================================================================
+# Pin asssignmenst for new PCC pin arrangements
+set_location_assignment PIN_M3 -to FPGA_D0   
+set_location_assignment PIN_L6 -to FPGA_D1   
+set_location_assignment PIN_T4 -to FPGA_D4   
+set_location_assignment PIN_T5 -to FPGA_D5   
+set_location_assignment PIN_T8 -to FPGA_D6   
+set_location_assignment PIN_L1 -to FPGA_D8   
+set_location_assignment PIN_T2 -to FPGA_D9   
+set_location_assignment PIN_K2 -to FPGA_D10  
+set_location_assignment PIN_L2 -to FPGA_D11  
+set_location_assignment PIN_R6 -to FPGA_D12  
+set_location_assignment PIN_T3 -to FPGA_D13  
+set_location_assignment PIN_B1 -to FPGA_MISO 
+set_location_assignment PIN_J2 -to FPGA_MOSI 
+set_location_assignment PIN_R4 -to FPGA_SCK  
 #set_location_assignment PIN_G6 -to JTAGEN # Don't need to manually connect this
-set_location_assignment PIN_P14 -to MISO
-set_location_assignment PIN_R12 -to MOSI
-set_location_assignment PIN_R11 -to SCK
-set_location_assignment PIN_K2 -to Z0
-set_location_assignment PIN_L2 -to Z1
-set_location_assignment PIN_R6 -to Z2
-set_location_assignment PIN_R5 -to Z3
-set_location_assignment PIN_T4 -to Z4
-set_location_assignment PIN_T5 -to Z5
-set_location_assignment PIN_T8 -to Z6
-set_location_assignment PIN_T2 -to Z7
-set_location_assignment PIN_T3 -to Z8
-set_location_assignment PIN_R4 -to Z9
+set_location_assignment PIN_P14 -to MISO     
+set_location_assignment PIN_R12 -to MOSI     
+set_location_assignment PIN_R11 -to SCK      
+set_location_assignment PIN_N4 -to Z0        
+set_location_assignment PIN_N3 -to Z1        
+set_location_assignment PIN_N2 -to Z2        
+set_location_assignment PIN_M2 -to Z3        
+set_location_assignment PIN_C3 -to Z4        
+set_location_assignment PIN_C2 -to Z5        
+set_location_assignment PIN_C1 -to Z6        
+set_location_assignment PIN_B2 -to Z7        
+set_location_assignment PIN_R5 -to Z8        
+set_location_assignment PIN_P1 -to Z9        
+#===========================================================================
 
 set_global_assignment -name PARTITION_NETLIST_TYPE SOURCE -section_id Top
 set_global_assignment -name PARTITION_FITTER_PRESERVATION_LEVEL PLACEMENT_AND_ROUTING -section_id Top
@@ -302,6 +335,34 @@ set_global_assignment -name PARTITION_COLOR 16764057 -section_id Top
 
 
 
+#set_location_assignment PIN_M3 -to FPGA_D0   
+#set_location_assignment PIN_L6 -to FPGA_D1   
+#set_location_assignment PIN_T2 -to FPGA_D4   // Originally P1
+#set_location_assignment PIN_T3 -to FPGA_D5   // Originally N4
+#set_location_assignment PIN_T4 -to FPGA_D6   // Originally N2
+#set_location_assignment PIN_L1 -to FPGA_D8   
+#set_location_assignment PIN_T5 -to FPGA_D9   // Originally M2
+#set_location_assignment PIN_K2 -to FPGA_D10  // Originally C3
+#set_location_assignment PIN_L2 -to FPGA_D11  // Originally C2
+#set_location_assignment PIN_R6 -to FPGA_D12  // Originally C1
+#set_location_assignment PIN_T8 -to FPGA_D13  // Originally B2
+#set_location_assignment PIN_B1 -to FPGA_MISO 
+#set_location_assignment PIN_J2 -to FPGA_MOSI 
+#set_location_assignment PIN_R4 -to FPGA_SCK  // Originally N3
+##set_location_assignment PIN_G6 -to JTAGEN # Don't need to manually connect this
+#set_location_assignment PIN_P14 -to MISO     
+#set_location_assignment PIN_R12 -to MOSI     
+#set_location_assignment PIN_R11 -to SCK      
+#set_location_assignment PIN_N4 -to Z0        // Originally K2
+#set_location_assignment PIN_N3 -to Z1        // Originally L2
+#set_location_assignment PIN_N2 -to Z2        // Originally R6
+#set_location_assignment PIN_M2 -to Z3        // Originally R5
+#set_location_assignment PIN_C3 -to Z4        // Originally T4
+#set_location_assignment PIN_C2 -to Z5        // Originally T5
+#set_location_assignment PIN_C1 -to Z6        // Originally T8
+#set_location_assignment PIN_B2 -to Z7        // Originally T2
+#set_location_assignment PIN_R5 -to Z8        // Originally T3
+#set_location_assignment PIN_P1 -to Z9        // Originally R4
 
 
 

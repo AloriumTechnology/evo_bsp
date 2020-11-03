@@ -342,6 +342,7 @@ def main() -> None:
           sleep(.1)
         data = ser.readline().decode('ascii').strip()
         if int(data) % 2 != 0:
+          print()
           print("Error: loading APAGE failed. Status = " + str(data))
           sys.exit(0)
         pointer += 1
