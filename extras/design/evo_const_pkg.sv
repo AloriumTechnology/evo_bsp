@@ -47,6 +47,8 @@ package evo_const_pkg;
    parameter EVO_INFO_RST_VAL     = 32'h00;
    parameter EVO_REG0E_RST_VAL    = 32'h0E;
    parameter EVO_REG0F_RST_VAL    = 32'h0F;
+   // EXTINT
+   parameter EIC_NUM_SOURCES     =  6; // 5 ports and 1 for evo_xb
    // D2F
    parameter D2F_DIR_RST_VAL    = 32'hFF7FFFFF; // Set passthru as F->D, except MISO [23] 
    parameter D2F_DIRCLR_RST_VAL =  0;

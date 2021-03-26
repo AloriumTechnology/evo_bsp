@@ -259,7 +259,7 @@ def main() -> None:
       sys.exit(0)
     pointer += 1
 
-  print("Beginning Evo Flashload, this may take a few mintues...")
+  print("Beginning Evo Flashload, this may take a few minutes...")
 
   # Load the flashload sketch with bossac
   if verbose:

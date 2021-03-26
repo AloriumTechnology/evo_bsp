@@ -21,7 +21,7 @@
 `define _EVO_ADDR_PKG_DONE      // set flag that pkg already included 
 
 
-package evo_addr_pkg; 
+package evo_addr_pkg;
    //==============================================================================
    // Private (non-CSR) Address definitions
    //==============================================================================
@@ -103,6 +103,8 @@ package evo_addr_pkg;
    parameter EVO_XB_INFO_VENDOR_ADDR = 32'h1; // Address and Value for Vendor name
    parameter EVO_XB_INFO_MODEL_ADDR  = 32'h2; // Address and Value for product Model 
    parameter EVO_XB_INFO_TYPE_ADDR   = 32'h3; // Address and Value for XB Type
+
+
    
    //==============================================================================
    //==============================================================================
@@ -555,10 +557,86 @@ package evo_addr_pkg;
    parameter PORT_Z_PINCFG30_ADDR  = PORT_Z_BASE_ADDR + 12'h03E; // Pin Configuration Bit 30 
    parameter PORT_Z_PINCFG31_ADDR  = PORT_Z_BASE_ADDR + 12'h03F; // Pin Configuration Bit 31 
 
+   //==============================================================================
+   // Evo Interrupt CSR Registers
+   //------------------------------------------------------------------------------
+   parameter EIC_BASE_ADDR         = 12'h200; // Interrupt Module Base Address
+   parameter EIC_CTRLA_ADDR        = EIC_BASE_ADDR + 12'h000; // EIC Control Register
+   parameter EIC_INTPIN_ADDR       = EIC_BASE_ADDR + 12'h001; // EIC Interrupt Pin Select
+   parameter EIC_INTENCLR_ADDR     = EIC_BASE_ADDR + 12'h002; // EIC Enable Clear Register
+   parameter EIC_INTENSET_ADDR     = EIC_BASE_ADDR + 12'h003; // EIC Enable Set Register
+   parameter EIC_INTFLAG_ADDR      = EIC_BASE_ADDR + 12'h004; // EIC Flag Register
+   parameter EIC_DPRESCALOR_ADDR   = EIC_BASE_ADDR + 12'h005; // EIC Debounce Control Register
+   
+   parameter EIC_D_SYNCBUSY_ADDR   = EIC_BASE_ADDR + 12'h010; // EIC Port D Sync Busy Register
+   parameter EIC_D_EVCTRL_ADDR     = EIC_BASE_ADDR + 12'h011; // EIC Port D Event Control Register
+   parameter EIC_D_INTENCLR_ADDR   = EIC_BASE_ADDR + 12'h012; // EIC Port D Enable Clear Register
+   parameter EIC_D_INTENSET_ADDR   = EIC_BASE_ADDR + 12'h013; // EIC Port D Enable Set Register
+   parameter EIC_D_INTFLAG_ADDR    = EIC_BASE_ADDR + 12'h014; // EIC Port D Flag Register
+   parameter EIC_D_ASYNCH_ADDR     = EIC_BASE_ADDR + 12'h015; // EIC Port D Asynch Register
+   parameter EIC_D_CONFIG0_ADDR    = EIC_BASE_ADDR + 12'h016; // EIC Port D Sense Config Register [ 7: 0]
+   parameter EIC_D_CONFIG1_ADDR    = EIC_BASE_ADDR + 12'h017; // EIC Port D Sense Config Register [15: 8]
+   parameter EIC_D_CONFIG2_ADDR    = EIC_BASE_ADDR + 12'h018; // EIC Port D Sense Config Register [23:16]
+   parameter EIC_D_CONFIG3_ADDR    = EIC_BASE_ADDR + 12'h019; // EIC Port D Sense Config Register [31:24]
+   parameter EIC_D_DEBOUNCEN_ADDR  = EIC_BASE_ADDR + 12'h01A; // EIC Port D Debounce Enable Register
+   parameter EIC_D_PINSTATE_ADDR   = EIC_BASE_ADDR + 12'h01B; // EIC Port D Pin State Register
+
+   parameter EIC_E_SYNCBUSY_ADDR   = EIC_BASE_ADDR + 12'h020; // EIC Port E Sync Busy Register
+   parameter EIC_E_EVCTRL_ADDR     = EIC_BASE_ADDR + 12'h021; // EIC Port E Event Control Register
+   parameter EIC_E_INTENCLR_ADDR   = EIC_BASE_ADDR + 12'h022; // EIC Port E Enable Clear Register
+   parameter EIC_E_INTENSET_ADDR   = EIC_BASE_ADDR + 12'h023; // EIC Port E Enable Set Register
+   parameter EIC_E_INTFLAG_ADDR    = EIC_BASE_ADDR + 12'h024; // EIC Port E Flag Register
+   parameter EIC_E_ASYNCH_ADDR     = EIC_BASE_ADDR + 12'h025; // EIC Port E Asynch Register
+   parameter EIC_E_CONFIG0_ADDR    = EIC_BASE_ADDR + 12'h026; // EIC Port E Sense Config Register [ 7: 0]
+   parameter EIC_E_CONFIG1_ADDR    = EIC_BASE_ADDR + 12'h027; // EIC Port E Sense Config Register [15: 8]
+   parameter EIC_E_CONFIG2_ADDR    = EIC_BASE_ADDR + 12'h028; // EIC Port E Sense Config Register [23:16]
+   parameter EIC_E_CONFIG3_ADDR    = EIC_BASE_ADDR + 12'h029; // EIC Port E Sense Config Register [31:24]
+   parameter EIC_E_DEBOUNCEN_ADDR  = EIC_BASE_ADDR + 12'h02A; // EIC Port E Debounce Enable Register
+   parameter EIC_E_PINSTATE_ADDR   = EIC_BASE_ADDR + 12'h02B; // EIC Port E Pin State Register
+
+   parameter EIC_F_SYNCBUSY_ADDR   = EIC_BASE_ADDR + 12'h030; // EIC Port F Sync Busy Register
+   parameter EIC_F_EVCTRL_ADDR     = EIC_BASE_ADDR + 12'h031; // EIC Port F Event Control Register
+   parameter EIC_F_INTENCLR_ADDR   = EIC_BASE_ADDR + 12'h032; // EIC Port F Enable Clear Register
+   parameter EIC_F_INTENSET_ADDR   = EIC_BASE_ADDR + 12'h033; // EIC Port F Enable Set Register
+   parameter EIC_F_INTFLAG_ADDR    = EIC_BASE_ADDR + 12'h034; // EIC Port F Flag Register
+   parameter EIC_F_ASYNCH_ADDR     = EIC_BASE_ADDR + 12'h035; // EIC Port F Asynch Register
+   parameter EIC_F_CONFIG0_ADDR    = EIC_BASE_ADDR + 12'h036; // EIC Port F Sense Config Register [ 7: 0]
+   parameter EIC_F_CONFIG1_ADDR    = EIC_BASE_ADDR + 12'h037; // EIC Port F Sense Config Register [15: 8]
+   parameter EIC_F_CONFIG2_ADDR    = EIC_BASE_ADDR + 12'h038; // EIC Port F Sense Config Register [23:16]
+   parameter EIC_F_CONFIG3_ADDR    = EIC_BASE_ADDR + 12'h039; // EIC Port F Sense Config Register [31:24]
+   parameter EIC_F_DEBOUNCEN_ADDR  = EIC_BASE_ADDR + 12'h03A; // EIC Port F Debounce Enable Register
+   parameter EIC_F_PINSTATE_ADDR   = EIC_BASE_ADDR + 12'h03B; // EIC Port F Pin State Register
+
+   parameter EIC_G_SYNCBUSY_ADDR   = EIC_BASE_ADDR + 12'h040; // EIC Port G Sync Busy Register
+   parameter EIC_G_EVCTRL_ADDR     = EIC_BASE_ADDR + 12'h041; // EIC Port G Event Control Register
+   parameter EIC_G_INTENCLR_ADDR   = EIC_BASE_ADDR + 12'h042; // EIC Port G Enable Clear Register
+   parameter EIC_G_INTENSET_ADDR   = EIC_BASE_ADDR + 12'h043; // EIC Port G Enable Set Register
+   parameter EIC_G_INTFLAG_ADDR    = EIC_BASE_ADDR + 12'h044; // EIC Port G Flag Register
+   parameter EIC_G_ASYNCH_ADDR     = EIC_BASE_ADDR + 12'h045; // EIC Port G Asynch Register
+   parameter EIC_G_CONFIG0_ADDR    = EIC_BASE_ADDR + 12'h046; // EIC Port G Sense Config Register [ 7: 0]
+   parameter EIC_G_CONFIG1_ADDR    = EIC_BASE_ADDR + 12'h047; // EIC Port G Sense Config Register [15: 8]
+   parameter EIC_G_CONFIG2_ADDR    = EIC_BASE_ADDR + 12'h048; // EIC Port G Sense Config Register [23:16]
+   parameter EIC_G_CONFIG3_ADDR    = EIC_BASE_ADDR + 12'h049; // EIC Port G Sense Config Register [31:24]
+   parameter EIC_G_DEBOUNCEN_ADDR  = EIC_BASE_ADDR + 12'h04A; // EIC Port G Debounce Enable Register
+   parameter EIC_G_PINSTATE_ADDR   = EIC_BASE_ADDR + 12'h04B; // EIC Port G Pin State Register
+
+   parameter EIC_Z_SYNCBUSY_ADDR   = EIC_BASE_ADDR + 12'h050; // EIC Port Z Sync Busy Register
+   parameter EIC_Z_EVCTRL_ADDR     = EIC_BASE_ADDR + 12'h051; // EIC Port Z Event Control Register
+   parameter EIC_Z_INTENCLR_ADDR   = EIC_BASE_ADDR + 12'h052; // EIC Port Z Enable Clear Register
+   parameter EIC_Z_INTENSET_ADDR   = EIC_BASE_ADDR + 12'h053; // EIC Port Z Enable Set Register
+   parameter EIC_Z_INTFLAG_ADDR    = EIC_BASE_ADDR + 12'h054; // EIC Port Z Flag Register
+   parameter EIC_Z_ASYNCH_ADDR     = EIC_BASE_ADDR + 12'h055; // EIC Port Z Asynch Register
+   parameter EIC_Z_CONFIG0_ADDR    = EIC_BASE_ADDR + 12'h056; // EIC Port Z Sense Config Register [ 7: 0]
+   parameter EIC_Z_CONFIG1_ADDR    = EIC_BASE_ADDR + 12'h057; // EIC Port Z Sense Config Register [15: 8]
+   parameter EIC_Z_CONFIG2_ADDR    = EIC_BASE_ADDR + 12'h058; // EIC Port Z Sense Config Register [23:16]
+   parameter EIC_Z_CONFIG3_ADDR    = EIC_BASE_ADDR + 12'h059; // EIC Port Z Sense Config Register [31:24]
+   parameter EIC_Z_DEBOUNCEN_ADDR  = EIC_BASE_ADDR + 12'h05A; // EIC Port Z Debounce Enable Register
+   parameter EIC_Z_PINSTATE_ADDR   = EIC_BASE_ADDR + 12'h05B; // EIC Port Z Pin State Register
+
 
 
    
-endpackage 
+endpackage // evo_addr_pkg
 
    // import into $UNIT 
    import evo_addr_pkg::*; 

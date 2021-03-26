@@ -174,6 +174,8 @@ module evo_core
    logic [PORT_Z_DWIDTH-1:0]        port_z_pmux_en;
    logic [PORT_Z_DWIDTH-1:0]        port_z_pmux_in;
 
+   logic                            xb_int;
+   logic                            eic_swrst;
 
    //---------------------------------------------------------------------------
    // CSR Avalon bus variables
@@ -292,6 +294,10 @@ module evo_core
       .port_z_pmux_en_i               (port_z_pmux_en),
       .port_z_pmux_in_o               (port_z_pmux_in),
 
+      // Interrupts
+      .xb_int_i                       (xb_int),
+      .eic_swrst_o                    (eic_swrst),
+
       // GPIO Connections
       .port_d_pads ({// Port D
                                                 SCK,     MOSI,       // [ 25: 24]
@@ -325,12 +331,30 @@ module evo_core
       );
    wire unok = &{1'b0, unused[35:0],1'b0};
 
+   
    //======================================================================
    // Instance Name:  evo_xb_inst
    // Module Type:    evo_xb
    //----------------------------------------------------------------------
-   // 
-   //======================================================================
+   //
+   // The evo_xb module is the top level wrapper for the user custom
+   // logic. Based on a evo_xb template, which provides all of the I/O
+   // and infrastructure the user needs, the evo_xb can be modified
+   // however the user likes.
+   //
+   // ======================================================================
+
+   // In older versions of evo_xb the interrupt connections did not
+   // exist. To use interrupts in the evo_xb, define EVO_XB_INTERRUPTS
+   // so that evo_xb is connected to the interrupt logic. Add a line
+   // like the following to your QSF file:
+   //
+   // set_global_assignment -name VERILOG_MACRO "EVO_XB_INTERRUPS=1"
+   //
+`ifndef EVO_XB_INTERRUPTS
+   always_comb xb_int = 1'b0;
+`endif   
+
    evo_xb
    evo_xb_inst
      (// Basic clock and reset
@@ -367,6 +391,11 @@ module evo_core
       .port_z_pmux_out_o              (port_z_pmux_out),
       .port_z_pmux_en_o               (port_z_pmux_en),
       .port_z_pmux_in_i               (port_z_pmux_in),
+`ifdef EVO_XB_INTERRUPTS
+      // Interrupts
+      .xb_int_o                       (xb_int),
+      .eic_swrst_i                    (eic_swrst),
+`endif      
       // CSR bus (Avalon MM Slave)
       .avs_csr_address                (avm_bsp_csr_address[MADR_MSB-1:MADR_LSB]),
       .avs_csr_read                   (avm_bsp_csr_read),

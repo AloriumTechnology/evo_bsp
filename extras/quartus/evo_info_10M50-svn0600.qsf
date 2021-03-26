@@ -1,0 +1,55 @@
+#=================================================================
+#  Copyright(c) Alorium Technology Group Inc., 2020
+#  ALL RIGHTS RESERVED
+#=================================================================
+#
+# File name:  : evo_settings.qsf
+# Author      : Steve Phillips
+# Contact     : support@aloriumtech.com
+# Description : 
+#
+# Temporary settings file created on the fly by ../bin/qcompile. Used
+# to set the values of the EVO_INFO variables
+#
+#=================================================================
+#
+
+post_message -type info "OPENEVO: | +- Enter ../../../evo_bsp/extras/quartus/$BSPINFO"
+
+# Set values for the EVO_INFO regs
+#
+#        
+# NAME   Description          Type    Default  Valid Values  
+# ------------------------------------------------------------------------------   
+# MODEL  Alorium Board name   [%4s]   EM51     EM51 (so far)   
+# SERIAL Not currently used   [ %d]   1        any  
+# PART   Board Date           [ %d]   202002   201910,202002 (so far) 
+# FTYPE  FPGA Type            [%4s]   10M      10M   
+# FSIZE  FPGA Size            [ %d]   25       02,04,08,16,25,40,50   
+# FSPLY  FPGA Supply          [%1s]   D        S,D
+# FFEAT  FPGA Feature Option  [%1s]   A        A,C,D,F                                       
+# FPACK  FPGA Package Type    [%1s]   F        E,F,M,U,V                                      
+# FPINS  FPGA Pin Count       [ %d]   256      36,81,144,153,169,256,324,484,672                                       
+# FTEMP  FPGA Operating Temp  [%1s]   C        A,C,I                                      
+# FSPED  FPGA Speed           [ %d]   8        6,7,8                                        
+# FOPTN  FPGA Optional Suffix [%1s]   G        E,G,P                                       
+# VER    Release Version      [ %d]   1        any   
+# SVN    SVN Repo Version     [ %d]   273      any   
+# -----------------------------------------------------------------------------
+set_parameter -name  EVO_INFO_MODEL_VAL  EM51       
+set_parameter -name  EVO_INFO_SERIAL_VAL 1              
+set_parameter -name  EVO_INFO_PART_VAL   202002     
+set_parameter -name  EVO_INFO_FTYPE_VAL  10M            
+set_parameter -name  EVO_INFO_FSIZE_VAL  50
+set_parameter -name  EVO_INFO_FSPLY_VAL  D               
+set_parameter -name  EVO_INFO_FFEAT_VAL  A  
+set_parameter -name  EVO_INFO_FPACK_VAL  F  
+set_parameter -name  EVO_INFO_FPINS_VAL  256  
+set_parameter -name  EVO_INFO_FTEMP_VAL  C  
+set_parameter -name  EVO_INFO_FSPED_VAL  8  
+set_parameter -name  EVO_INFO_FOPTN_VAL  G  
+set_parameter -name  EVO_INFO_VER_VAL    1 
+set_parameter -name  EVO_INFO_SVN_VAL    600   
+# -----------------------------------------------------------------------------
+post_message -type info "OPENEVO: | -- Exit  ../../../evo_bsp/extras/quartus/$BSPINFO"
+

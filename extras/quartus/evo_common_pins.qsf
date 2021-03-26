@@ -1,0 +1,207 @@
+#==============================================================================
+# Copyright (c) 2020 Alorium Technology.  All right reserved.
+#==============================================================================
+#
+# File Name  : evo_common.qsf
+# Author     : Steve Phillips
+# Contact    : support@aloriumtech.com
+# Description:
+#
+#==============================================================================
+
+post_message -type info "OPENEVO:   +- Enter $BSPPATH/extras/quartus/evo_common_pins.qsf"
+
+#============================================================================
+# MISC
+#============================================================================
+#                       IO Type                                       RTL Name         
+#                       -------------------------------               --------
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_CLKEN
+set_instance_assignment -name IO_STANDARD "3.3 V SCHMITT TRIGGER" -to RESETN
+#
+#                       Pin                                 RTL Name         
+#                       -------------------------------     ---------------- 
+set_location_assignment PIN_L3 -to FPGA_CLK
+set_location_assignment PIN_R1 -to FPGA_CLKEN
+set_location_assignment PIN_B10 -to RESETN
+
+#============================================================================
+# I2C
+#============================================================================
+#                       IO Type                             RTL Name         
+#                       -------------------------------     ---------------- 
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_SDA
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_SCL
+#
+#                       Pin                                 RTL Name         
+#                       -------------------------------     ---------------- 
+set_location_assignment PIN_P6 -to FPGA_SDA
+set_location_assignment PIN_R7 -to FPGA_SCL
+
+
+#============================================================================
+# FPGA PINS
+#============================================================================
+#                       IO Type                             RTL Name         
+#                       -------------------------------     ---------------- 
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to ADC-R
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AN1
+#set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to AN2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D9
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D11
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D12
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D13
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to D13_LED
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E7
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E9
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E11
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E12
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E13
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E14
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E15
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E16
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E17
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E18
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E19
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E20
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E21
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E22
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E23
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E24
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E25
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E26
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E27
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E28
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E29
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E30
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to E31
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to G0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to G1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D9
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D10
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D11
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D12
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_D13
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_MISO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_MOSI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to FPGA_SCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to JTAGEN
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MISO
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to MOSI
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to SCK
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z0
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z1
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z2
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z3
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z4
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z5
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z6
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z7
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z8
+set_instance_assignment -name IO_STANDARD "3.3-V LVTTL" -to Z9
+
+#                       Pin                                 RTL Name         
+#                       -------------------------------     ---------------- 
+#set_location_assignment PIN_E4                          -to ADC-R
+#set_location_assignment PIN_D2                          -to AN1
+#set_location_assignment PIN_F3                          -to AN2
+set_location_assignment PIN_T14 -to D0
+set_location_assignment PIN_T15 -to D1
+set_location_assignment PIN_P16 -to D4
+set_location_assignment PIN_E14 -to D5
+set_location_assignment PIN_A13 -to D6
+set_location_assignment PIN_P11 -to D8
+set_location_assignment PIN_D14 -to D9
+set_location_assignment PIN_H2 -to D10
+set_location_assignment PIN_G1 -to D11
+set_location_assignment PIN_H3 -to D12
+set_location_assignment PIN_H1 -to D13
+set_location_assignment PIN_B3 -to D13_LED
+set_location_assignment PIN_P12 -to E0
+set_location_assignment PIN_P13 -to E1
+set_location_assignment PIN_N14 -to E2
+set_location_assignment PIN_R14 -to E3
+set_location_assignment PIN_M14 -to E4
+set_location_assignment PIN_P15 -to E5
+set_location_assignment PIN_L15 -to E6
+set_location_assignment PIN_K14 -to E7
+set_location_assignment PIN_L16 -to E8
+set_location_assignment PIN_M16 -to E9
+set_location_assignment PIN_K15 -to E10
+set_location_assignment PIN_J14 -to E11
+set_location_assignment PIN_J16 -to E12
+set_location_assignment PIN_J15 -to E13
+set_location_assignment PIN_H11 -to E14
+set_location_assignment PIN_H16 -to E15
+set_location_assignment PIN_H15 -to E16
+set_location_assignment PIN_G15 -to E17
+set_location_assignment PIN_G14 -to E18
+set_location_assignment PIN_F16 -to E19
+set_location_assignment PIN_G16 -to E20
+set_location_assignment PIN_E16 -to E21
+set_location_assignment PIN_E15 -to E22
+set_location_assignment PIN_C16 -to E23
+set_location_assignment PIN_C15 -to E24
+set_location_assignment PIN_C14 -to E25
+set_location_assignment PIN_B13 -to E26
+set_location_assignment PIN_C13 -to E27
+set_location_assignment PIN_A4 -to E28
+set_location_assignment PIN_A8 -to E29
+set_location_assignment PIN_A7 -to E30
+set_location_assignment PIN_A6 -to E31
+set_location_assignment PIN_A5 -to G0
+set_location_assignment PIN_B5 -to G1
+#set_location_assignment PIN_G6 -to JTAGEN # Don't need to manually connect this
+set_location_assignment PIN_P14 -to MISO     
+set_location_assignment PIN_R12 -to MOSI     
+set_location_assignment PIN_R11 -to SCK
+# Pin asssignmenst for new PCC pin arrangements
+set_location_assignment PIN_M3 -to FPGA_D0   
+set_location_assignment PIN_L6 -to FPGA_D1   
+set_location_assignment PIN_T4 -to FPGA_D4   
+set_location_assignment PIN_T5 -to FPGA_D5   
+set_location_assignment PIN_T8 -to FPGA_D6   
+set_location_assignment PIN_L1 -to FPGA_D8   
+set_location_assignment PIN_T2 -to FPGA_D9   
+set_location_assignment PIN_K2 -to FPGA_D10  
+set_location_assignment PIN_L2 -to FPGA_D11  
+set_location_assignment PIN_R4 -to FPGA_D12  
+set_location_assignment PIN_T3 -to FPGA_D13  
+set_location_assignment PIN_N3 -to FPGA_SCK  
+set_location_assignment PIN_B1 -to FPGA_MISO 
+set_location_assignment PIN_J2 -to FPGA_MOSI 
+set_location_assignment PIN_N4 -to Z0        
+set_location_assignment PIN_R6 -to Z1        
+set_location_assignment PIN_N2 -to Z2        
+set_location_assignment PIN_M2 -to Z3        
+set_location_assignment PIN_C3 -to Z4        
+set_location_assignment PIN_C2 -to Z5        
+set_location_assignment PIN_C1 -to Z6        
+set_location_assignment PIN_B2 -to Z7        
+set_location_assignment PIN_R5 -to Z8        
+set_location_assignment PIN_P1 -to Z9        
+#===========================================================================
+post_message -type info "OPENEVO:   -- Exit $BSPPATH/extras/quartus/evo_common_pins.qsf"
