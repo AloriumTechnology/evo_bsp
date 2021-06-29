@@ -14,23 +14,35 @@
 `define FLASH
 
 module evo_core
-  #(parameter DC_COMPACT      =  1'h0, // Default is not Compact (10MxxDAF)
-    parameter DC_FPGA_SIZE    = 8'h19, // Default is 10M25
-    parameter FLASH_BYTE_FLIP = 1, // Flip the bits going to xlr8_flashload
-    parameter EVO_INFO_MODEL_VAL   = 32'hc0ffee00, 
-    parameter EVO_INFO_SERIAL_VAL  = 32'hc0ffee01,
-    parameter EVO_INFO_PART_VAL    = 32'hc0ffee12,
-    parameter EVO_INFO_FTYPE_VAL   = 32'hc0ffee10,
-    parameter EVO_INFO_FSIZE_VAL   = 32'hc0ffee11,
-    parameter EVO_INFO_FSPLY_VAL   = 32'hc0ffee12,
-    parameter EVO_INFO_FFEAT_VAL   = 32'hc0ffee13,
-    parameter EVO_INFO_FPACK_VAL   = 32'hc0ffee14,
-    parameter EVO_INFO_FPINS_VAL   = 32'hc0ffee15,
-    parameter EVO_INFO_FTEMP_VAL   = 32'hc0ffee16,
-    parameter EVO_INFO_FSPED_VAL   = 32'hc0ffee17,
-    parameter EVO_INFO_FOPTN_VAL   = 32'hc0ffee18,
-    parameter EVO_INFO_VER_VAL     = 32'hc0ffee20,
-    parameter EVO_INFO_SVN_VAL     = 32'hc0ffee21
+  #(parameter DC_COMPACT               =  1'h0, // Default is not Compact (10MxxDAF)
+    parameter DC_FPGA_SIZE             = 8'h19, // Default is 10M25
+    parameter FLASH_BYTE_FLIP          = 1, // Flip the bits going to xlr8_flashload
+    parameter EVO_PLL_CLK2_DIVIDE_BY   = 3,
+    parameter EVO_PLL_CLK2_DUTY_CYCLE  = 50,
+    parameter EVO_PLL_CLK2_MULTIPLY_BY = 4,
+    parameter EVO_PLL_CLK2_PHASE_SHIFT = "0",
+    parameter EVO_PLL_CLK3_DIVIDE_BY   = 3,
+    parameter EVO_PLL_CLK3_DUTY_CYCLE  = 50,
+    parameter EVO_PLL_CLK3_MULTIPLY_BY = 8,
+    parameter EVO_PLL_CLK3_PHASE_SHIFT = "0",
+    parameter EVO_PLL_CLK4_DIVIDE_BY   = 1,
+    parameter EVO_PLL_CLK4_DUTY_CYCLE  = 50,
+    parameter EVO_PLL_CLK4_MULTIPLY_BY = 1,
+    parameter EVO_PLL_CLK4_PHASE_SHIFT = "0",
+    parameter EVO_INFO_MODEL_VAL       = 32'hc0ffee00, 
+    parameter EVO_INFO_SERIAL_VAL      = 32'hc0ffee01,
+    parameter EVO_INFO_PART_VAL        = 32'hc0ffee12,
+    parameter EVO_INFO_FTYPE_VAL       = 32'hc0ffee10,
+    parameter EVO_INFO_FSIZE_VAL       = 32'hc0ffee11,
+    parameter EVO_INFO_FSPLY_VAL       = 32'hc0ffee12,
+    parameter EVO_INFO_FFEAT_VAL       = 32'hc0ffee13,
+    parameter EVO_INFO_FPACK_VAL       = 32'hc0ffee14,
+    parameter EVO_INFO_FPINS_VAL       = 32'hc0ffee15,
+    parameter EVO_INFO_FTEMP_VAL       = 32'hc0ffee16,
+    parameter EVO_INFO_FSPED_VAL       = 32'hc0ffee17,
+    parameter EVO_INFO_FOPTN_VAL       = 32'hc0ffee18,
+    parameter EVO_INFO_VER_VAL         = 32'hc0ffee20,
+    parameter EVO_INFO_SVN_VAL         = 32'hc0ffee21
     )  
    (
     // CLocks and Resets
@@ -139,9 +151,10 @@ module evo_core
    logic        clk_bsp;
    logic        clk_60;
    logic        clk_120;
-   logic        clk_16;
-   logic        clk_32;
-   logic        en16mhz;
+   logic 	pll_clk2;
+   logic 	pll_clk3;
+   logic 	pll_clk4;
+   logic 	en20mhz;
    logic        en1mhz;
 
    wire [35:0] unused; // Tie off the unused bits in the port_pads bus
@@ -193,19 +206,33 @@ module evo_core
    // Module Type:    evo_clkrst
    //----------------------------------------------------------------------
    // 
-   // 
+   // EVO_CLK_CONFIGURABLE indicates the new version of the evo_clkrst
+   // module which allows the user to configure the clock taps numbers
+   // 2, 3, and 4. Previously they were hard wire to 16MHz and
+   // 32MHz. In addition, the en16mhz signal has been replaced by the
+   // en20mhz signal, which is used in the I2C module
+   //
    //======================================================================
 
    localparam CLOCK_SELECT = 1; // 0=16MHz, 1=60MHz, 2=120MHz, 3=reserved 
-
    //   localparam RESET_DELAY       = 32'h00055000; // 344142 = 0x5404E
    localparam RESET_DELAY       = 32'h00000010; // temp small delay
-
-
    
    evo_clkrst 
-     #(.CLOCK_SELECT (CLOCK_SELECT),
-       .RESET_DELAY  (RESET_DELAY)
+     #(.CLOCK_SELECT             (CLOCK_SELECT),
+       .RESET_DELAY              (RESET_DELAY),
+       .EVO_PLL_CLK2_DIVIDE_BY   (EVO_PLL_CLK2_DIVIDE_BY),
+       .EVO_PLL_CLK2_DUTY_CYCLE  (EVO_PLL_CLK2_DUTY_CYCLE),
+       .EVO_PLL_CLK2_MULTIPLY_BY (EVO_PLL_CLK2_MULTIPLY_BY),
+       .EVO_PLL_CLK2_PHASE_SHIFT (EVO_PLL_CLK2_PHASE_SHIFT),
+       .EVO_PLL_CLK3_DIVIDE_BY   (EVO_PLL_CLK3_DIVIDE_BY),
+       .EVO_PLL_CLK3_DUTY_CYCLE  (EVO_PLL_CLK3_DUTY_CYCLE),
+       .EVO_PLL_CLK3_MULTIPLY_BY (EVO_PLL_CLK3_MULTIPLY_BY),
+       .EVO_PLL_CLK3_PHASE_SHIFT (EVO_PLL_CLK3_PHASE_SHIFT),
+       .EVO_PLL_CLK4_DIVIDE_BY   (EVO_PLL_CLK4_DIVIDE_BY),
+       .EVO_PLL_CLK4_DUTY_CYCLE  (EVO_PLL_CLK4_DUTY_CYCLE),
+       .EVO_PLL_CLK4_MULTIPLY_BY (EVO_PLL_CLK4_MULTIPLY_BY),
+       .EVO_PLL_CLK4_PHASE_SHIFT (EVO_PLL_CLK4_PHASE_SHIFT)
        )
    evo_clkrst_inst 
      (// Inputs
@@ -218,9 +245,10 @@ module evo_core
       .clk_bsp       (clk_bsp),
       .clk_60        (clk_60),
       .clk_120       (clk_120),
-      .clk_16        (clk_16),
-      .clk_32        (clk_32),
-      .en16mhz       (en16mhz),
+      .pll_clk2      (pll_clk2),
+      .pll_clk3      (pll_clk3),
+      .pll_clk4      (pll_clk4),
+      .en20mhz       (en20mhz),
       .en1mhz        (en1mhz)
       );
 
@@ -257,8 +285,8 @@ module evo_core
       .clk       (clk_bsp),
       .clken     (1'b1),
       .reset_n   (reset_n),
-      .en16mhz   (en16mhz),
-      
+      .en16mhz   (en20mhz),
+
       // Dedicated I2C bus between SAMD and FPGA
       .FPGA_SCL  (FPGA_SCL),
       .FPGA_SDA  (FPGA_SDA),
@@ -366,9 +394,16 @@ module evo_core
       .clk_bsp                        (clk_bsp),
       .clk_60                         (clk_60),
       .clk_120                        (clk_120),
-      .clk_16                         (clk_16),
-      .clk_32                         (clk_32),
-      .en16mhz                        (en16mhz),
+`ifdef EVO_CLK_ORIGINAL
+      .clk_16                         (pll_clk2),
+      .clk_32                         (pll_clk3),
+      .en16mhz                        (en20mhz),
+`else
+      .pll_clk2                       (pll_clk2),
+      .pll_clk3                       (pll_clk3),
+      .pll_clk4                       (pll_clk4),
+      .en20mhz                        (en20mhz),
+`endif
       .en1mhz                         (en1mhz),
       // PMUX connections
       .port_d_pmux_dir_o              (port_d_pmux_dir),

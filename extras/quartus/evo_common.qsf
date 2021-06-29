@@ -157,6 +157,7 @@ set_global_assignment -name SYSTEMVERILOG_FILE $BSPPATH/extras/design/evo_top.sv
 # OpenEvo Settings
 #############################################################################
 # Read any OpenEvo specific quartus commands
+post_message -type info "OPENEVO:   +- Source $OXBPATH/extras/quartus/openevo.qsf"
 source $OXBPATH/extras/quartus/openevo.qsf
 
 #############################################################################

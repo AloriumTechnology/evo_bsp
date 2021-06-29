@@ -27,23 +27,35 @@
 
 module evo_top
   #(
-    parameter DC_COMPACT           =  1'h0,  // Default is not Compact (10MxxDAF)
-    parameter DC_FPGA_SIZE         = 8'h19,  // Default is 10M25
-    parameter FLASH_BYTE_FLIP      = 1,      // Flip the bits going to xlr8_flashload
-    parameter EVO_INFO_MODEL_VAL   = 32'hc0ffee00, 
-    parameter EVO_INFO_SERIAL_VAL  = 32'hc0ffee01,
-    parameter EVO_INFO_PART_VAL    = 32'hc0ffee12,
-    parameter EVO_INFO_FTYPE_VAL   = 32'hc0ffee10,
-    parameter EVO_INFO_FSIZE_VAL   = 32'hc0ffee11,
-    parameter EVO_INFO_FSPLY_VAL   = 32'hc0ffee12,
-    parameter EVO_INFO_FFEAT_VAL   = 32'hc0ffee13,
-    parameter EVO_INFO_FPACK_VAL   = 32'hc0ffee14,
-    parameter EVO_INFO_FPINS_VAL   = 32'hc0ffee15,
-    parameter EVO_INFO_FTEMP_VAL   = 32'hc0ffee16,
-    parameter EVO_INFO_FSPED_VAL   = 32'hc0ffee17,
-    parameter EVO_INFO_FOPTN_VAL   = 32'hc0ffee18,
-    parameter EVO_INFO_VER_VAL     = 32'hc0ffee20,
-    parameter EVO_INFO_SVN_VAL     = 32'hc0ffee21
+    parameter DC_COMPACT               =  1'h0,  // Default is not Compact (10MxxDAF)
+    parameter DC_FPGA_SIZE             = 8'h19,  // Default is 10M25
+    parameter FLASH_BYTE_FLIP          = 1,      // Flip the bits going to xlr8_flashload
+    parameter EVO_PLL_CLK2_DIVIDE_BY   = 3,
+    parameter EVO_PLL_CLK2_DUTY_CYCLE  = 50,
+    parameter EVO_PLL_CLK2_MULTIPLY_BY = 4,
+    parameter EVO_PLL_CLK2_PHASE_SHIFT = "0",
+    parameter EVO_PLL_CLK3_DIVIDE_BY   = 3,
+    parameter EVO_PLL_CLK3_DUTY_CYCLE  = 50,
+    parameter EVO_PLL_CLK3_MULTIPLY_BY = 8,
+    parameter EVO_PLL_CLK3_PHASE_SHIFT = "0",
+    parameter EVO_PLL_CLK4_DIVIDE_BY   = 1,
+    parameter EVO_PLL_CLK4_DUTY_CYCLE  = 50,
+    parameter EVO_PLL_CLK4_MULTIPLY_BY = 1,
+    parameter EVO_PLL_CLK4_PHASE_SHIFT = "0",
+    parameter EVO_INFO_MODEL_VAL       = 32'hc0ffee00, 
+    parameter EVO_INFO_SERIAL_VAL      = 32'hc0ffee01,
+    parameter EVO_INFO_PART_VAL        = 32'hc0ffee12,
+    parameter EVO_INFO_FTYPE_VAL       = 32'hc0ffee10,
+    parameter EVO_INFO_FSIZE_VAL       = 32'hc0ffee11,
+    parameter EVO_INFO_FSPLY_VAL       = 32'hc0ffee12,
+    parameter EVO_INFO_FFEAT_VAL       = 32'hc0ffee13,
+    parameter EVO_INFO_FPACK_VAL       = 32'hc0ffee14,
+    parameter EVO_INFO_FPINS_VAL       = 32'hc0ffee15,
+    parameter EVO_INFO_FTEMP_VAL       = 32'hc0ffee16,
+    parameter EVO_INFO_FSPED_VAL       = 32'hc0ffee17,
+    parameter EVO_INFO_FOPTN_VAL       = 32'hc0ffee18,
+    parameter EVO_INFO_VER_VAL         = 32'hc0ffee20,
+    parameter EVO_INFO_SVN_VAL         = 32'hc0ffee21
     )
    (
     // CLocks and Resets
@@ -112,23 +124,35 @@ module evo_top
    evo_core
 `endif
      
-     #(.DC_COMPACT          (DC_COMPACT),
-       .DC_FPGA_SIZE        (DC_FPGA_SIZE),
-       .FLASH_BYTE_FLIP     (FLASH_BYTE_FLIP), // Flip the bits going to xlr8_flashload
-       .EVO_INFO_MODEL_VAL  (EVO_INFO_MODEL_VAL),  
-       .EVO_INFO_SERIAL_VAL (EVO_INFO_SERIAL_VAL), 
-       .EVO_INFO_PART_VAL   (EVO_INFO_PART_VAL),   
-       .EVO_INFO_FTYPE_VAL  (EVO_INFO_FTYPE_VAL),  
-       .EVO_INFO_FSIZE_VAL  (EVO_INFO_FSIZE_VAL),  
-       .EVO_INFO_FSPLY_VAL  (EVO_INFO_FSPLY_VAL),  
-       .EVO_INFO_FFEAT_VAL  (EVO_INFO_FFEAT_VAL),  
-       .EVO_INFO_FPACK_VAL  (EVO_INFO_FPACK_VAL),  
-       .EVO_INFO_FPINS_VAL  (EVO_INFO_FPINS_VAL),  
-       .EVO_INFO_FTEMP_VAL  (EVO_INFO_FTEMP_VAL),  
-       .EVO_INFO_FSPED_VAL  (EVO_INFO_FSPED_VAL),  
-       .EVO_INFO_FOPTN_VAL  (EVO_INFO_FOPTN_VAL),  
-       .EVO_INFO_VER_VAL    (EVO_INFO_VER_VAL),    
-       .EVO_INFO_SVN_VAL    (EVO_INFO_SVN_VAL)    
+     #(.DC_COMPACT               (DC_COMPACT),
+       .DC_FPGA_SIZE             (DC_FPGA_SIZE),
+       .FLASH_BYTE_FLIP          (FLASH_BYTE_FLIP), // Flip the bits going to xlr8_flashload
+       .EVO_PLL_CLK2_DIVIDE_BY   (EVO_PLL_CLK2_DIVIDE_BY),
+       .EVO_PLL_CLK2_DUTY_CYCLE  (EVO_PLL_CLK2_DUTY_CYCLE),
+       .EVO_PLL_CLK2_MULTIPLY_BY (EVO_PLL_CLK2_MULTIPLY_BY),
+       .EVO_PLL_CLK2_PHASE_SHIFT (EVO_PLL_CLK2_PHASE_SHIFT),
+       .EVO_PLL_CLK3_DIVIDE_BY   (EVO_PLL_CLK3_DIVIDE_BY),
+       .EVO_PLL_CLK3_DUTY_CYCLE  (EVO_PLL_CLK3_DUTY_CYCLE),
+       .EVO_PLL_CLK3_MULTIPLY_BY (EVO_PLL_CLK3_MULTIPLY_BY),
+       .EVO_PLL_CLK3_PHASE_SHIFT (EVO_PLL_CLK3_PHASE_SHIFT),
+       .EVO_PLL_CLK4_DIVIDE_BY   (EVO_PLL_CLK4_DIVIDE_BY),
+       .EVO_PLL_CLK4_DUTY_CYCLE  (EVO_PLL_CLK4_DUTY_CYCLE),
+       .EVO_PLL_CLK4_MULTIPLY_BY (EVO_PLL_CLK4_MULTIPLY_BY),
+       .EVO_PLL_CLK4_PHASE_SHIFT (EVO_PLL_CLK4_PHASE_SHIFT),
+       .EVO_INFO_MODEL_VAL       (EVO_INFO_MODEL_VAL),  
+       .EVO_INFO_SERIAL_VAL      (EVO_INFO_SERIAL_VAL), 
+       .EVO_INFO_PART_VAL        (EVO_INFO_PART_VAL),   
+       .EVO_INFO_FTYPE_VAL       (EVO_INFO_FTYPE_VAL),  
+       .EVO_INFO_FSIZE_VAL       (EVO_INFO_FSIZE_VAL),  
+       .EVO_INFO_FSPLY_VAL       (EVO_INFO_FSPLY_VAL),  
+       .EVO_INFO_FFEAT_VAL       (EVO_INFO_FFEAT_VAL),  
+       .EVO_INFO_FPACK_VAL       (EVO_INFO_FPACK_VAL),  
+       .EVO_INFO_FPINS_VAL       (EVO_INFO_FPINS_VAL),  
+       .EVO_INFO_FTEMP_VAL       (EVO_INFO_FTEMP_VAL),  
+       .EVO_INFO_FSPED_VAL       (EVO_INFO_FSPED_VAL),  
+       .EVO_INFO_FOPTN_VAL       (EVO_INFO_FOPTN_VAL),  
+       .EVO_INFO_VER_VAL         (EVO_INFO_VER_VAL),    
+       .EVO_INFO_SVN_VAL         (EVO_INFO_SVN_VAL)    
        )
    evo_core_inst
      (// CLocks and Resets
